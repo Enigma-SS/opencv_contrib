@@ -423,6 +423,14 @@ void LBPH::predict(InputArray _src, Ptr<PredictCollector> collector) const {
     }
 }
 
+std::map<int, double> LBPHFaceRecognizer::predict_all(InputArray src) const {
+    // get all predictions
+    Ptr<StandardCollector> collector = StandardCollector::create(getThreshold());
+    predict(src, collector);
+    // extract the map and return it
+    return collector->getResultsMap();
+}
+
 Ptr<LBPHFaceRecognizer> LBPHFaceRecognizer::create(int radius, int neighbors,
                                              int grid_x, int grid_y, double threshold)
 {

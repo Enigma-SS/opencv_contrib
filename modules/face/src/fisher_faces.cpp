@@ -42,6 +42,7 @@ public:
 
     // Send all predict results to caller side for custom result handling
     void predict(InputArray src, Ptr<PredictCollector> collector) const CV_OVERRIDE;
+
     String getDefaultName() const CV_OVERRIDE
     {
         return "opencv_fisherfaces";
@@ -148,6 +149,14 @@ void Fisherfaces::predict(InputArray _src, Ptr<PredictCollector> collector) cons
         int label = _labels.at<int>((int)sampleIdx);
         if (!collector->collect(label, dist))return;
     }
+}
+
+std::map<int, double> FisherFaceRecognizer::predict_all(InputArray src) const {
+    // get all predictions
+    Ptr<StandardCollector> collector = StandardCollector::create(getThreshold());
+    predict(src, collector);
+    // extract the map and return it
+    return collector->getResultsMap();
 }
 
 Ptr<FisherFaceRecognizer> FisherFaceRecognizer::create(int num_components, double threshold)

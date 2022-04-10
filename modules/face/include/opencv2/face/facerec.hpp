@@ -120,6 +120,9 @@ public:
     -   labels The labels corresponding to the projections.
      */
     CV_WRAP static Ptr<FisherFaceRecognizer> create(int num_components = 0, double threshold = DBL_MAX);
+
+    // Send all predict results to caller by setting up results for OpenCvSharp
+    CV_WRAP std::map<int, double> predict_all(InputArray src) const;
 };
 
 
@@ -182,6 +185,9 @@ public:
     -   labels Labels corresponding to the calculated Local Binary Patterns Histograms.
      */
     CV_WRAP static Ptr<LBPHFaceRecognizer> create(int radius=1, int neighbors=8, int grid_x=8, int grid_y=8, double threshold = DBL_MAX);
+
+    // Send all predict results to caller by setting up results for OpenCvSharp
+    CV_WRAP std::map<int, double> predict_all(InputArray src) const;
 };
 
 //! @}
